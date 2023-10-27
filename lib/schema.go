@@ -709,7 +709,7 @@ func (s *Schema) UniqueInput(wg *sync.WaitGroup) {
 				if s.Inputs[i].Name == v.Name {
 					if IsEqualWithoutDescriptions(s.Inputs[i].Directives, v.Directives) {
 						s.Inputs[i].Fields = mergeFields(s.Inputs[i].Fields, v.Fields)
-						mergeDescriptionsAndComments(s.Inputs[i], v)
+						// mergeDescriptionsAndComments(s.Inputs[i], v)
 						break
 					} else {
 
