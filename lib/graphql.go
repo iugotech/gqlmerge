@@ -129,5 +129,6 @@ type Input struct {
 	BaseFileInfo
 	Name         string
 	Fields       []*Field
+	Directives   []*Directive
 	Descriptions *[]string
 }

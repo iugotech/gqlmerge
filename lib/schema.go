@@ -283,6 +283,7 @@ func (s *Schema) Parse(p *Parser) {
 			name, _ := p.lex.consumeIdent()
 			i.Name = name.String()
 			i.Descriptions = p.bufString()
+			i.Directives = p.parseDirectives()
 
 			p.lex.consumeToken(tokLBrace)
 
@@ -706,7 +707,8 @@ func (s *Schema) UniqueInput(wg *sync.WaitGroup) {
 		if _, ok := seen[v.Name]; ok {
 			for i := 0; i < j; i++ {
 				if s.Inputs[i].Name == v.Name {
-					if IsEqualWithoutDescriptions(s.Inputs[i].Fields, v.Fields) {
+					if IsEqualWithoutDescriptions(s.Inputs[i].Directives, v.Directives) {
+						s.Inputs[i].Fields = mergeFields(s.Inputs[i].Fields, v.Fields)
 						mergeDescriptionsAndComments(s.Inputs[i], v)
 						break
 					} else {
